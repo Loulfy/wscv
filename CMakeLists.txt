@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.7)
 project(wscv)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 add_definitions(-DWWW_DIR=\"${PROJECT_SOURCE_DIR}/web\")
 add_definitions(-DDATA_DIR=\"${PROJECT_SOURCE_DIR}/data/\")
 

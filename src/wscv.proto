@@ -19,4 +19,7 @@ message Request
 message Response
 {
     string status = 1;
+    bool trigger = 2;
+    int32 x = 3;
+    int32 y = 4;
 }

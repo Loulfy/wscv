@@ -18,27 +18,41 @@ static void signal_handler(int sig_num)
     s_signal_received = sig_num;
 }
 
+static const cv::Scalar skin_lower(0, 48, 80);
+static const cv::Scalar skin_upper(20, 255, 255);
+
+bool contourSort(vector<cv::Point>& a, vector<cv::Point>& b) { return cv::contourArea(a) > contourArea(b); }
+
 static void compute(cv::Mat& frame, wscv::Response& res)
 {
     cv::flip(frame, frame, 0);
-    
-    //cv::cvtColor(frame, frame, cv::COLOR_BGR2HLS);
-    //cv::inRange(frame, cv::Scalar(0, 0.1 * 255, 0.05 * 255), cv::Scalar(30 , 0.8 * 255, 0.6 * 255), frame);
-    //cv::blur(frame, frame, cv::Size(10, 10));
-    //cv::threshold(frame, frame, 200, 255, cv::THRESH_BINARY);
+    cv::flip(frame, frame, 1);
+
+    cv::cvtColor(frame, frame, cv::COLOR_RGB2HSV);
+    cv::inRange(frame, skin_lower, skin_upper, frame);
+    cv::erode(frame, frame, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(6, 6)), cv::Point(-1, -1), 2);
+    cv::dilate(frame, frame, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(6, 6)), cv::Point(-1, -1), 2);
+
+    vector<vector<cv::Point>> contours;
+    cv::findContours(frame, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+    if(!contours.empty())
+    {
+        cv::Point2f center;
+        float radius;
+        std::sort(contours.begin(), contours.end(), contourSort);
+        minEnclosingCircle(contours.front(), center, radius);
+        res.set_status("success");
+        res.set_trigger(false);
+        res.set_x(center.x);
+        res.set_y(center.y);
+
+        //drawContours(frame, contours, -1, cv::Scalar(50, 255, 255));
+        //circle(frame, center, radius, cv::Scalar(255, 0, 0));
+    }
+    else res.set_status("failure");
 
     //if(show) cv::imshow("camera", frame);
     //if((cv::waitKey(30) & 0xff) == 27) show = false;
-
-    cv::cvtColor(frame, frame, cv::COLOR_BGR2GRAY);
-    cv::CascadeClassifier face_cascade(DATA_DIR"haarcascade_frontalface_default.xml");
-
-    std::vector<cv::Rect> faces;
-    face_cascade.detectMultiScale(frame, faces);
-
-    if(faces.empty()) res.set_status("failure");
-    else res.set_status("success");
-
 }
 
 static void ev_handler(struct mg_connection *nc, int ev, void *ev_data)

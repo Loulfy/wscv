@@ -27,12 +27,13 @@ namespace Wscv {
             "Cgp3c2N2LnByb3RvEgR3c2N2InsKB1JlcXVlc3QSDQoFd2lkdGgYASABKAUS",
             "DgoGaGVpZ2h0GAIgASgFEg8KB2NvbnRlbnQYAyABKAwSJAoGbWV0aG9kGAQg",
             "ASgOMhQud3Njdi5SZXF1ZXN0Lk1ldGhvZCIaCgZNZXRob2QSBwoDU0VUEAAS",
-            "BwoDR0VUEAEiGgoIUmVzcG9uc2USDgoGc3RhdHVzGAEgASgJYgZwcm90bzM="));
+            "BwoDR0VUEAEiQQoIUmVzcG9uc2USDgoGc3RhdHVzGAEgASgJEg8KB3RyaWdn",
+            "ZXIYAiABKAgSCQoBeBgDIAEoBRIJCgF5GAQgASgFYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Wscv.Request), global::Wscv.Request.Parser, new[]{ "Width", "Height", "Content", "Method" }, null, new[]{ typeof(global::Wscv.Request.Types.Method) }, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Wscv.Response), global::Wscv.Response.Parser, new[]{ "Status" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Wscv.Response), global::Wscv.Response.Parser, new[]{ "Status", "Trigger", "X", "Y" }, null, null, null)
           }));
     }
     #endregion
@@ -293,6 +294,9 @@ namespace Wscv {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Response(Response other) : this() {
       status_ = other.status_;
+      trigger_ = other.trigger_;
+      x_ = other.x_;
+      y_ = other.y_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -312,6 +316,39 @@ namespace Wscv {
       }
     }
 
+    /// <summary>Field number for the "trigger" field.</summary>
+    public const int TriggerFieldNumber = 2;
+    private bool trigger_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Trigger {
+      get { return trigger_; }
+      set {
+        trigger_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "x" field.</summary>
+    public const int XFieldNumber = 3;
+    private int x_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int X {
+      get { return x_; }
+      set {
+        x_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "y" field.</summary>
+    public const int YFieldNumber = 4;
+    private int y_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Y {
+      get { return y_; }
+      set {
+        y_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Response);
@@ -326,6 +363,9 @@ namespace Wscv {
         return true;
       }
       if (Status != other.Status) return false;
+      if (Trigger != other.Trigger) return false;
+      if (X != other.X) return false;
+      if (Y != other.Y) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -333,6 +373,9 @@ namespace Wscv {
     public override int GetHashCode() {
       int hash = 1;
       if (Status.Length != 0) hash ^= Status.GetHashCode();
+      if (Trigger != false) hash ^= Trigger.GetHashCode();
+      if (X != 0) hash ^= X.GetHashCode();
+      if (Y != 0) hash ^= Y.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -350,6 +393,18 @@ namespace Wscv {
         output.WriteRawTag(10);
         output.WriteString(Status);
       }
+      if (Trigger != false) {
+        output.WriteRawTag(16);
+        output.WriteBool(Trigger);
+      }
+      if (X != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(X);
+      }
+      if (Y != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(Y);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -360,6 +415,15 @@ namespace Wscv {
       int size = 0;
       if (Status.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Status);
+      }
+      if (Trigger != false) {
+        size += 1 + 1;
+      }
+      if (X != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(X);
+      }
+      if (Y != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Y);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -375,6 +439,15 @@ namespace Wscv {
       if (other.Status.Length != 0) {
         Status = other.Status;
       }
+      if (other.Trigger != false) {
+        Trigger = other.Trigger;
+      }
+      if (other.X != 0) {
+        X = other.X;
+      }
+      if (other.Y != 0) {
+        Y = other.Y;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -388,6 +461,18 @@ namespace Wscv {
             break;
           case 10: {
             Status = input.ReadString();
+            break;
+          }
+          case 16: {
+            Trigger = input.ReadBool();
+            break;
+          }
+          case 24: {
+            X = input.ReadInt32();
+            break;
+          }
+          case 32: {
+            Y = input.ReadInt32();
             break;
           }
         }

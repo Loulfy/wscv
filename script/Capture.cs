@@ -24,7 +24,7 @@ public class Capture : MonoBehaviour
         
         // Connect
         ws = new ClientWebSocket();
-        ws.ConnectAsync(new Uri("ws://lylix.io:9090"), CancellationToken.None).Wait();
+        ws.ConnectAsync(new Uri("ws://192.168.1.59:9090"), CancellationToken.None).Wait();
 
         // Create buffer frame
         Debug.Log(cam.width+ "x" +cam.height);
@@ -65,7 +65,7 @@ public class Capture : MonoBehaviour
 
         // TODO : do something with response
         var res = Response.Parser.ParseFrom(ByteString.CopyFrom(buffer, segment.Offset, r.Count));
-        Debug.Log(res.Status);
+        Debug.Log(res.X + "x" + res.Y);
         Camera.main.backgroundColor = res.Status == "success" ? Color.green : Color.red;
     }
 }
