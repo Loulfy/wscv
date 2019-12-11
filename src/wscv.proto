@@ -1,0 +1,22 @@
+syntax = "proto3";
+package wscv;
+
+message Request
+{
+    enum Method
+    {
+        SET = 0;
+        GET = 1;
+    }
+
+    int32 width = 1;
+    int32 height = 2;
+    bytes content = 3;
+    Method method = 4;
+}
+
+// Our address book file is just one of these.
+message Response
+{
+    string status = 1;
+}
