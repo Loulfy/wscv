@@ -1,9 +1,9 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.10)
 project(wscv)
 
 set(CMAKE_CXX_STANDARD 17)
 add_definitions(-DWWW_DIR=\"${PROJECT_SOURCE_DIR}/web\")
-add_definitions(-DDATA_DIR=\"${PROJECT_SOURCE_DIR}/data\")
+add_definitions(-DDATA_DIR=\"${PROJECT_SOURCE_DIR}/data/\")
 
 find_package(OpenCV REQUIRED)
 find_package(Protobuf REQUIRED)
